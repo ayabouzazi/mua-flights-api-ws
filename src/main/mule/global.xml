@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:wsc="http://www.mulesoft.org/schema/mule/wsc"
+	xmlns:american-flights-sapi="http://www.mulesoft.org/schema/mule/american-flights-sapi" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/american-flights-sapi http://www.mulesoft.org/schema/mule/american-flights-sapi/current/mule-american-flights-sapi.xsd
+http://www.mulesoft.org/schema/mule/wsc http://www.mulesoft.org/schema/mule/wsc/current/mule-wsc.xsd">
+	    
+	<http:listener-config name="mua-flights-api-httpListenerConfig">
+        <http:listener-connection host="0.0.0.0" port="${http.port}" />
+    </http:listener-config>
+	<configuration-properties doc:name="Configuration properties" doc:id="48955747-3b3f-49c6-af1d-1696dbfcf156" file="config.yaml" />
+	<american-flights-sapi:config name="AmericanFlightsSAPIConfig" doc:name="American Flights SAPI Config" doc:id="0d1aeb3c-355f-47da-ab4a-4c013144659b" property_host="${american.host}" property_port="${american.port}" property_basePath="${american.basepath}" property_protocol="${american.protocol}" />
+	<http:request-config name="UnitedHTTPRequestConfiguration" doc:name="HTTP Request configuration" doc:id="75a39736-0e9e-4ff3-b825-9dd710b1feeb" basePath="${united.basepath}" >
+		<http:request-connection protocol="${united.protocol}" host="${united.host}" port="${united.port}" />
+	</http:request-config>
+	<wsc:config name="DeltaWebServiceConsumerConfig" doc:name="Web Service Consumer Config" doc:id="c16b9269-692a-48e5-b107-3fd895c9b870" >
+		<wsc:connection wsdlLocation="${delta.wsdl}" service="${delta.service}" port="${delta.port}" />
+	</wsc:config>
+	<configuration doc:name="Configuration" doc:id="0672f482-bd63-47f4-8c6e-2ff904b302a6" defaultErrorHandler-ref="GlobalErrorHandler" />
+	<error-handler name="GlobalErrorHandler" doc:id="50207c0b-79b8-475d-9176-338e8ebd2539" >
+		<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="afe2bc0f-6b54-47b1-9219-22e60cc91d58" type="ANY">
+			<logger level="INFO" doc:name="Logger" doc:id="83ac6cac-4a2b-43f3-b369-68dc1984d883" />
+		</on-error-propagate>
+	</error-handler>
+	
+
+</mule>

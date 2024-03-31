@@ -1,0 +1,19 @@
+http:
+  port:           "8081"
+  
+american:
+  host:           "ilt.mule-training.com"
+  port:           "80"
+  basepath:       "/american-ws"
+  protocol:       "HTTP"
+  
+united:
+  host:           "ilt.mule-training.com"
+  port:           "80"
+  basepath:       "/united"
+  protocol:       "HTTP"
+  
+delta:
+  wsdl:           "http://ilt.mule-training.com/delta?wsdl"
+  service:        "TicketServiceService"
+  port:           "DeltaFlightsServiceImplPort"
